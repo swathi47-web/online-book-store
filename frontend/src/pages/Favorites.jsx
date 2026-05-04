@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Heart, Mail, User, Layers3 } from "lucide-react";
+import { apiUrl } from "../lib/api";
 
 export default function Favorites() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function Favorites() {
       }
 
       try {
-        const res = await fetch("http://localhost:5000/api/users/profile", {
+        const res = await fetch(apiUrl("/api/users/profile"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

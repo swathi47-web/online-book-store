@@ -12,8 +12,17 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 
 const app = express();
 
+const allowedOrigins = (process.env.FRONTEND_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: allowedOrigins.length > 0 ? allowedOrigins : true,
+  })
+);
 app.use(express.json());
 
 // Routes

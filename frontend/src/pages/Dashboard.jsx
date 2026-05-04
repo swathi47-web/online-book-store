@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, Clock3, Heart, Layers3, Mail, ShieldCheck } from "lucide-react";
+import { apiUrl } from "../lib/api";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function Dashboard() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/users/profile", {
+      const res = await fetch(apiUrl("/api/users/profile"), {
         headers: { Authorization: `Bearer ${tokenValue}` },
       });
       const data = await res.json();

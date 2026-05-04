@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { Search } from "lucide-react";
+import { apiUrl } from "../lib/api";
 
 const chips = ["History", "Fantasy", "Science", "Mystery", "Romance", "Biography"];
 
@@ -33,7 +34,7 @@ export default function Books() {
         params.set("page", String(currentPage));
         params.set("limit", "12");
 
-        const res = await axios.get(`http://localhost:5000/api/books?${params.toString()}`);
+        const res = await axios.get(apiUrl(`/api/books?${params.toString()}`));
         setBooks(res.data.books || []);
         setPageInfo({
           page: res.data.page || 1,

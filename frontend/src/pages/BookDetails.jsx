@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "../lib/api";
 
 export default function BookDetails() {
   const { id } = useParams();
@@ -32,7 +33,7 @@ export default function BookDetails() {
     if (!token) return;
 
     const res = await axios.post(
-      `http://localhost:5000/api/users/history/${id}`,
+      apiUrl(`/api/users/history/${id}`),
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -48,7 +49,7 @@ export default function BookDetails() {
       setError("");
 
       try {
-        const bookRes = await axios.get(`http://localhost:5000/api/books/${id}`);
+        const bookRes = await axios.get(apiUrl(`/api/books/${id}`));
         setBook(bookRes.data);
       } catch {
         setError("Failed to load book details.");
@@ -63,7 +64,7 @@ export default function BookDetails() {
       }
 
       try {
-        const reviewsRes = await axios.get(`http://localhost:5000/api/reviews/${id}`);
+        const reviewsRes = await axios.get(apiUrl(`/api/reviews/${id}`));
         setReviews(reviewsRes.data || []);
       } catch {
         setReviews([]);
@@ -85,7 +86,7 @@ export default function BookDetails() {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/users/favorites/${id}`,
+        apiUrl(`/api/users/favorites/${id}`),
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -135,13 +136,13 @@ export default function BookDetails() {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/reviews/${id}`,
+        apiUrl(`/api/reviews/${id}`),
         { reviewText: reviewText.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setReviewText("");
-      const res = await axios.get(`http://localhost:5000/api/reviews/${id}`);
+      const res = await axios.get(apiUrl(`/api/reviews/${id}`));
       setReviews(res.data || []);
       setActionMessage("Review submitted.");
     } catch {
